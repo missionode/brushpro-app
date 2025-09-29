@@ -119,7 +119,7 @@
                 document.getElementById('summary-project-type').textContent = quoteData.projectType ? quoteData.projectType.charAt(0).toUpperCase() + quoteData.projectType.slice(1) : 'Not specified';
                 document.getElementById('summary-rooms').textContent = quoteData.rooms.length > 0 ? quoteData.rooms.map(r => r.roomType).join(', ') : 'No rooms specified';
                 document.getElementById('summary-paint-type').textContent = quoteData.paintType ? quoteData.paintType.charAt(0).toUpperCase() + quoteData.paintType.slice(1) : 'Standard';
-                document.getElementById('summary-cost').textContent = `$${quoteData.estimatedCost.toFixed(2)}`;
+                document.getElementById('summary-cost').textContent = `₹${quoteData.estimatedCost.toFixed(2)}`;
             } else {
                 // Fallback for direct navigation
                 document.getElementById('summary-project-type').textContent = 'N/A';
