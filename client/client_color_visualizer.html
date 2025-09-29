@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - Color Visualizer</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-white shadow-sm py-4 border-b border-gray-100">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="client_dashboard.html" class="text-2xl font-bold text-blue-600 flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-2.414-2.414A1 1 0 0015.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
+                BrushPro
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="client_dashboard.html" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+                <a href="client_profile.html" class="text-gray-700 hover:text-blue-600 font-medium">Profile</a>
+                <a href="client_service_selection.html" class="text-blue-600 font-medium">Services</a>
+                <a href="client_job_tracking.html" class="text-gray-700 hover:text-blue-600 font-medium">My Jobs</a>
+                <a href="../shared/shared_help_support.html" class="text-gray-700 hover:text-blue-600 font-medium">Support</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-white shadow-lg py-2 mt-2 hidden">
+            <a href="client_dashboard.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Dashboard</a>
+            <a href="client_profile.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+            <a href="client_service_selection.html" class="block px-4 py-2 text-blue-600 hover:bg-gray-100">Services</a>
+            <a href="client_job_tracking.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Jobs</a>
+            <a href="../shared/shared_help_support.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Support</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-600 hover:bg-red-50" onclick="alert('Logged out');">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Color Visualizer</h1>
+        <p class="text-lg text-gray-600 mb-8">Upload a photo of your room and see how different paint colors transform your space!</p>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">1. Upload Your Room Photo</h2>
+            <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 mb-6 h-64 relative">
+                <input type="file" id="imageUpload" accept="image/*" class="hidden">
+                <label for="imageUpload" class="cursor-pointer text-blue-600 hover:text-blue-700 flex flex-col items-center">
+                    <svg class="w-16 h-16 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    <span class="text-xl font-medium">Click to upload or drag & drop</span>
+                    <span class="text-sm text-gray-500">JPG, PNG, or GIF, max 5MB</span>
+                </label>
+                <img id="uploadedImage" class="absolute inset-0 w-full h-full object-cover rounded-lg hidden" alt="Uploaded Room">
+                <button id="removeImageButton" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hidden" title="Remove Image">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <p class="text-sm text-gray-500 italic">For best results, upload a clear photo of a single wall or room.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">2. Choose Your Paint Color</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4" id="colorPalette">
+                </div>
+            <div class="mt-6">
+                <label for="customColor" class="block text-sm font-medium text-gray-700 mb-1">Or pick a custom color:</label>
+                <input type="color" id="customColor" value="#cccccc" class="w-full h-12 rounded-lg cursor-pointer border-none">
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">3. Visualize Your Room</h2>
+            <div id="visualizerArea" class="relative w-full h-96 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+                <img id="visualizerImage" src="" alt="Room with applied color" class="w-full h-full object-cover absolute hidden">
+                <div id="paintOverlay" class="absolute inset-0 hidden mix-blend-multiply"></div>
+                <p id="visualizerPlaceholder" class="text-gray-500 text-center text-lg p-4">
+                    Upload a photo and pick a color to see the magic!
+                </p>
+            </div>
+            <p class="text-sm text-gray-500 mt-4 italic">Note: Color representation may vary due to screen settings and lighting. This is an approximation.</p>
+        </div>
+
+        <div class="text-center flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <button id="saveColorSelection"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                Save Color Selection
+            </button>
+            <a href="client_booking.html"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                Proceed to Booking
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="#" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        const imageUpload = document.getElementById('imageUpload');
+        const uploadedImage = document.getElementById('uploadedImage');
+        const removeImageButton = document.getElementById('removeImageButton');
+        const visualizerImage = document.getElementById('visualizerImage');
+        const paintOverlay = document.getElementById('paintOverlay');
+        const visualizerPlaceholder = document.getElementById('visualizerPlaceholder');
+        const colorPalette = document.getElementById('colorPalette');
+        const customColorInput = document.getElementById('customColor');
+
+        let currentImageSrc = '';
+
+        // Predefined color swatches (example using Tailwind colors)
+        const paintColors = [
+            '#ef4444', // Red-500
+            '#f97316', // Orange-500
+            '#eab308', // Yellow-500
+            '#22c55e', // Green-500
+            '#06b6d4', // Cyan-500
+            '#3b82f6', // Blue-500
+            '#6366f1', // Indigo-500
+            '#a855f7', // Purple-500
+            '#ec4899', // Pink-500
+            '#78716c', // Stone-500
+            '#ffffff', // White
+            '#000000', // Black
+        ];
+
+        // Function to create color swatch elements
+        function createColorSwatches() {
+            colorPalette.innerHTML = '';
+            paintColors.forEach(color => {
+                const swatch = document.createElement('div');
+                swatch.className = 'w-12 h-12 rounded-full cursor-pointer border-2 border-transparent hover:border-blue-500 transition duration-150';
+                swatch.style.backgroundColor = color;
+                swatch.dataset.color = color;
+                swatch.addEventListener('click', () => applyColor(color));
+                colorPalette.appendChild(swatch);
+            });
+        }
+
+        // Function to apply chosen color to the visualizer
+        function applyColor(color) {
+            if (currentImageSrc) {
+                paintOverlay.style.backgroundColor = color;
+                paintOverlay.classList.remove('hidden');
+                visualizerPlaceholder.classList.add('hidden');
+            } else {
+                alert('Please upload a room photo first!');
+            }
+        }
+
+        // Image upload handling
+        imageUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentImageSrc = e.target.result;
+                    uploadedImage.src = currentImageSrc;
+                    visualizerImage.src = currentImageSrc;
+                    uploadedImage.classList.remove('hidden');
+                    visualizerImage.classList.remove('hidden');
+                    removeImageButton.classList.remove('hidden');
+                    visualizerPlaceholder.classList.add('hidden');
+
+                    // Reset overlay if image changes
+                    paintOverlay.classList.add('hidden');
+                    paintOverlay.style.backgroundColor = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Remove image functionality
+        removeImageButton.addEventListener('click', () => {
+            currentImageSrc = '';
+            uploadedImage.src = '';
+            visualizerImage.src = '';
+            uploadedImage.classList.add('hidden');
+            visualizerImage.classList.add('hidden');
+            removeImageButton.classList.add('hidden');
+            paintOverlay.classList.add('hidden');
+            paintOverlay.style.backgroundColor = '';
+            visualizerPlaceholder.classList.remove('hidden');
+            imageUpload.value = ''; // Clear file input
+        });
+
+        // Custom color picker handling
+        customColorInput.addEventListener('input', (event) => {
+            applyColor(event.target.value);
+        });
+
+        // Save Color Selection Button
+        document.getElementById('saveColorSelection').addEventListener('click', () => {
+            if (currentImageSrc && paintOverlay.style.backgroundColor) {
+                // In a real app, you would save the image + color combination or just the color code
+                const selectedColor = paintOverlay.style.backgroundColor;
+                localStorage.setItem('selectedPaintColor', selectedColor);
+                alert(`Color "${selectedColor}" saved for your project!`);
+            } else {
+                alert('Please upload an image and select a color first.');
+            }
+        });
+
+        // Initialize color swatches on load
+        document.addEventListener('DOMContentLoaded', createColorSwatches);
+    </script>
+</body>
+</html>

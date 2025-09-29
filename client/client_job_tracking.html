@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - My Jobs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-white shadow-sm py-4 border-b border-gray-100">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="client_dashboard.html" class="text-2xl font-bold text-blue-600 flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-2.414-2.414A1 1 0 0015.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
+                BrushPro
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="client_dashboard.html" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+                <a href="client_profile.html" class="text-gray-700 hover:text-blue-600 font-medium">Profile</a>
+                <a href="client_service_selection.html" class="text-gray-700 hover:text-blue-600 font-medium">Services</a>
+                <a href="client_job_tracking.html" class="text-blue-600 font-medium">My Jobs</a>
+                <a href="../shared/shared_help_support.html" class="text-gray-700 hover:text-blue-600 font-medium">Support</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-white shadow-lg py-2 mt-2 hidden">
+            <a href="client_dashboard.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Dashboard</a>
+            <a href="client_profile.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+            <a href="client_service_selection.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Services</a>
+            <a href="client_job_tracking.html" class="block px-4 py-2 text-blue-600 hover:bg-gray-100">My Jobs</a>
+            <a href="../shared/shared_help_support.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Support</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-600 hover:bg-red-50" onclick="alert('Logged out');">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">My Painting Jobs</h1>
+        <p class="text-lg text-gray-600 mb-8">Track the progress of your active projects and review past ones.</p>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Current Jobs</h2>
+            <div id="currentJobsList" class="space-y-4">
+                <div class="job-card border border-blue-200 rounded-lg p-5 flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold text-blue-700 mb-1">Job #BP20250810 - Living Room & Kitchen</h3>
+                        <p class="text-gray-700">Scheduled: <span class="font-medium">August 10, 2025</span></p>
+                        <p class="text-gray-700">Status: <span class="font-medium text-amber-600">Painter Assigned</span></p>
+                        <p class="text-gray-700">Assigned Painter: <span class="font-medium">Sarah Miller</span></p>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-3">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm" onclick="viewJobDetails('BP20250810')">View Details</button>
+                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm" onclick="contactPainter('Sarah Miller')">Contact Painter</button>
+                    </div>
+                </div>
+                <p id="noCurrentJobs" class="text-gray-500 italic hidden">No active jobs at the moment. <a href="client_service_selection.html" class="text-blue-600 hover:underline">Get a new quote!</a></p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Past Jobs</h2>
+            <div id="pastJobsList" class="space-y-4">
+                <div class="job-card border border-gray-200 rounded-lg p-5 flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-1">Job #BP20250720 - Bedroom & Hallway</h3>
+                        <p class="text-gray-700">Completed: <span class="font-medium">July 20, 2025</span></p>
+                        <p class="text-gray-700">Status: <span class="font-medium text-emerald-600">Completed</span></p>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-3">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm" onclick="viewJobDetails('BP20250720')">View Details</button>
+                        <a href="client_review_feedback.html?jobId=BP20250720" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm">Leave Review</a>
+                    </div>
+                </div>
+                <p id="noPastJobs" class="text-gray-500 italic hidden">No past jobs to display.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Mock job data (in a real app, this would come from an API)
+        const mockJobs = [
+            {
+                id: 'BP20250810',
+                title: 'Living Room & Kitchen Painting',
+                scheduledDate: 'August 10, 2025',
+                status: 'Painter Assigned',
+                statusColor: 'amber',
+                painter: 'Sarah Miller',
+                type: 'current'
+            },
+            {
+                id: 'BP20250901',
+                title: 'Bedroom Re-painting',
+                scheduledDate: 'September 1, 2025',
+                status: 'Booking Confirmed',
+                statusColor: 'blue',
+                painter: 'TBD',
+                type: 'current'
+            },
+            {
+                id: 'BP20250720',
+                title: 'Bedroom & Hallway Painting',
+                completedDate: 'July 20, 2025',
+                status: 'Completed',
+                statusColor: 'emerald',
+                type: 'past'
+            },
+            {
+                id: 'BP20250605',
+                title: 'Exterior House Painting',
+                completedDate: 'June 05, 2025',
+                status: 'Completed',
+                statusColor: 'emerald',
+                type: 'past'
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderJobs();
+        });
+
+        function renderJobs() {
+            const currentJobsList = document.getElementById('currentJobsList');
+            const pastJobsList = document.getElementById('pastJobsList');
+            currentJobsList.innerHTML = ''; // Clear existing
+            pastJobsList.innerHTML = ''; // Clear existing
+
+            let hasCurrentJobs = false;
+            let hasPastJobs = false;
+
+            mockJobs.forEach(job => {
+                const jobCard = document.createElement('div');
+                jobCard.className = `job-card border ${job.type === 'current' ? 'border-blue-200' : 'border-gray-200'} rounded-lg p-5 flex flex-col md:flex-row justify-between items-start md:items-center`;
+
+                jobCard.innerHTML = `
+                    <div>
+                        <h3 class="text-xl font-semibold ${job.type === 'current' ? 'text-blue-700' : 'text-gray-800'} mb-1">Job #${job.id} - ${job.title}</h3>
+                        ${job.scheduledDate ? `<p class="text-gray-700">Scheduled: <span class="font-medium">${job.scheduledDate}</span></p>` : ''}
+                        ${job.completedDate ? `<p class="text-gray-700">Completed: <span class="font-medium">${job.completedDate}</span></p>` : ''}
+                        <p class="text-gray-700">Status: <span class="font-medium text-${job.statusColor}-600">${job.status}</span></p>
+                        ${job.painter && job.painter !== 'TBD' ? `<p class="text-gray-700">Assigned Painter: <span class="font-medium">${job.painter}</span></p>` : ''}
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-3">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm" onclick="viewJobDetails('${job.id}')">View Details</button>
+                        ${job.type === 'current' ? `
+                            <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm" onclick="contactPainter('${job.painter}')">Contact Painter</button>
+                        ` : `
+                            <a href="client_review_feedback.html?jobId=${job.id}" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm">Leave Review</a>
+                        `}
+                    </div>
+                `;
+
+                if (job.type === 'current') {
+                    currentJobsList.appendChild(jobCard);
+                    hasCurrentJobs = true;
+                } else {
+                    pastJobsList.appendChild(jobCard);
+                    hasPastJobs = true;
+                }
+            });
+
+            if (!hasCurrentJobs) {
+                document.getElementById('noCurrentJobs').classList.remove('hidden');
+            } else {
+                document.getElementById('noCurrentJobs').classList.add('hidden');
+            }
+
+            if (!hasPastJobs) {
+                document.getElementById('noPastJobs').classList.remove('hidden');
+            } else {
+                document.getElementById('noPastJobs').classList.add('hidden');
+            }
+        }
+
+        function viewJobDetails(jobId) {
+            alert(`Viewing details for Job ID: ${jobId}. (This would open a detailed modal or new page in a real app)`);
+            // In a real app: window.location.href = `client_job_details.html?id=${jobId}`;
+        }
+
+        function contactPainter(painterName) {
+            alert(`Initiating chat/call with ${painterName}. (This would open a messaging interface)`);
+            // In a real app: window.location.href = `client_chat.html?painter=${painterName}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - Painter Profile</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-indigo-700 text-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="painter_dashboard.html" class="text-2xl font-bold flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-2.414-2.414A1 1 0 0015.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
+                BrushPro Painter
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="painter_dashboard.html" class="text-white hover:text-indigo-200 font-medium">Dashboard</a>
+                <a href="painter_jobs.html" class="text-white hover:text-indigo-200 font-medium">My Jobs</a>
+                <a href="painter_profile.html" class="text-indigo-200 font-medium">Profile</a>
+                <a href="painter_earnings.html" class="text-white hover:text-indigo-200 font-medium">Earnings</a>
+                <a href="../shared/shared_help_support.html" class="text-white hover:text-indigo-200 font-medium">Support</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-indigo-800 shadow-lg py-2 mt-2 hidden">
+            <a href="painter_dashboard.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Dashboard</a>
+            <a href="painter_jobs.html" class="block px-4 py-2 text-white hover:bg-indigo-700">My Jobs</a>
+            <a href="painter_profile.html" class="block px-4 py-2 text-indigo-200 hover:bg-indigo-700">Profile</a>
+            <a href="painter_earnings.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Earnings</a>
+            <a href="../shared/shared_help_support.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Support</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-400 hover:bg-red-500">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">My Profile</h1>
+        <p class="text-lg text-gray-600 mb-8">Manage your personal details, work preferences, and professional information.</p>
+
+        <form id="painterProfileForm" class="bg-white p-6 rounded-xl shadow-md space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <input type="text" id="firstName" name="firstName" value="Sarah" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" value="Miller" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <input type="email" id="email" name="email" value="sarah.miller@brushpro.com" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed" readonly>
+                <p class="mt-1 text-sm text-gray-500">Email cannot be changed here. Contact support to update.</p>
+            </div>
+
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                <input type="tel" id="phone" name="phone" value="+1 (555) 123-4567" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="addressLine1" class="block text-sm font-medium text-gray-700 mb-1">Address Line 1</label>
+                    <input type="text" id="addressLine1" name="addressLine1" value="456 Painter's Lane" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label for="addressLine2" class="block text-sm font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
+                    <input type="text" id="addressLine2" name="addressLine2" value="Apt 2B"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <input type="text" id="city" name="city" value="Metroville" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                    <input type="text" id="state" name="state" value="CA" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label for="zipCode" class="block text-sm font-medium text-gray-700 mb-1">Zip Code</label>
+                    <input type="text" id="zipCode" name="zipCode" value="90210" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+            </div>
+
+            <div>
+                <label for="serviceRadius" class="block text-sm font-medium text-gray-700 mb-1">Service Radius (miles)</label>
+                <input type="number" id="serviceRadius" name="serviceRadius" value="25" min="5" max="100" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <p class="mt-1 text-sm text-gray-500">This determines how far you're willing to travel for jobs.</p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Job Types</label>
+                <div class="flex flex-wrap gap-x-4 gap-y-2">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="jobType" value="interior" class="form-checkbox text-indigo-600 h-5 w-5" checked>
+                        <span class="ml-2 text-gray-700">Interior Painting</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="jobType" value="exterior" class="form-checkbox text-indigo-600 h-5 w-5">
+                        <span class="ml-2 text-gray-700">Exterior Painting</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="jobType" value="commercial" class="form-checkbox text-indigo-600 h-5 w-5">
+                        <span class="ml-2 text-gray-700">Commercial Projects</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="jobType" value="prep" class="form-checkbox text-indigo-600 h-5 w-5" checked>
+                        <span class="ml-2 text-gray-700">Surface Preparation</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label for="bio" class="block text-sm font-medium text-gray-700 mb-1">About Me / Bio</label>
+                <textarea id="bio" name="bio" rows="4"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          placeholder="Tell us about your experience, specialties, or philosophy.">Experienced and meticulous painter with 10+ years in residential interior painting. Specializing in clean lines and a smooth finish. Dedicated to client satisfaction.</textarea>
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                Save Profile
+            </button>
+        </form>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        document.getElementById('painterProfileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real app, collect form data and send to server
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                addressLine1: document.getElementById('addressLine1').value,
+                addressLine2: document.getElementById('addressLine2').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zipCode: document.getElementById('zipCode').value,
+                serviceRadius: document.getElementById('serviceRadius').value,
+                jobTypes: Array.from(document.querySelectorAll('input[name="jobType"]:checked')).map(cb => cb.value),
+                bio: document.getElementById('bio').value
+            };
+
+            console.log('Profile data submitted:', formData);
+            alert('Your profile has been updated successfully!');
+            // After successful update, you might want to redirect or show a confirmation.
+            // window.location.href = 'painter_dashboard.html';
+        });
+
+        // Example: load mock data into form fields on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // This is where you would fetch data from a backend and populate the form
+            // For now, form fields have default values set directly in HTML
+        });
+    </script>
+</body>
+</html>

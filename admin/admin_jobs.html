@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - Manage Jobs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-purple-700 text-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="admin_dashboard.html" class="text-2xl font-bold flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                BrushPro Admin
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="admin_dashboard.html" class="text-white hover:text-purple-200 font-medium">Dashboard</a>
+                <a href="admin_clients.html" class="text-white hover:text-purple-200 font-medium">Clients</a>
+                <a href="admin_painters.html" class="text-white hover:text-purple-200 font-medium">Painters</a>
+                <a href="admin_jobs.html" class="text-purple-200 font-medium">Jobs</a>
+                <a href="admin_settings.html" class="text-white hover:text-purple-200 font-medium">Settings</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-purple-800 shadow-lg py-2 mt-2 hidden">
+            <a href="admin_dashboard.html" class="block px-4 py-2 text-white hover:bg-purple-700">Dashboard</a>
+            <a href="admin_clients.html" class="block px-4 py-2 text-white hover:bg-purple-700">Clients</a>
+            <a href="admin_painters.html" class="block px-4 py-2 text-white hover:bg-purple-700">Painters</a>
+            <a href="admin_jobs.html" class="block px-4 py-2 text-purple-200 hover:bg-purple-700">Jobs</a>
+            <a href="admin_settings.html" class="block px-4 py-2 text-white hover:bg-purple-700">Settings</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-400 hover:bg-red-500">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Manage Jobs</h1>
+        <p class="text-lg text-gray-600 mb-8">View, filter, and manage all painting jobs in the system.</p>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 space-y-4 md:space-y-0 md:space-x-4">
+                <input type="text" id="jobSearch" placeholder="Search by Job ID, Client, or Painter..."
+                       class="w-full md:w-80 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                
+                <select id="statusFilter" class="w-full md:w-48 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <option value="">All Statuses</option>
+                    <option value="Pending">Pending Assignment</option>
+                    <option value="Assigned">Assigned</option>
+                    <option value="Scheduled">Scheduled</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Canceled">Canceled</option>
+                </select>
+
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Create New Job functionality (modal or new page)');">
+                    Create New Job
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Job ID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Painter</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project Type</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Scheduled Date</th>
+                            <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="jobsTableBody" class="bg-white divide-y divide-gray-200">
+                        </tbody>
+                </table>
+            </div>
+
+            <nav class="flex items-center justify-between pt-4" aria-label="Pagination">
+                <div class="flex-1 flex justify-between sm:justify-end">
+                    <button id="prevPage" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Previous
+                    </button>
+                    <button id="nextPage" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Next
+                    </button>
+                </div>
+            </nav>
+            <p id="noJobsFound" class="text-gray-500 italic text-center mt-4 hidden">No jobs found matching your criteria.</p>
+        </div>
+
+        <div id="jobDetailsModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6 relative">
+                <button class="absolute top-3 right-3 text-gray-500 hover:text-gray-800" onclick="closeJobDetailsModal()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Job Details: <span id="modalJobTitle"></span></h3>
+                <div class="space-y-3 text-gray-700">
+                    <p><strong>Job ID:</strong> <span id="modalJobId"></span></p>
+                    <p><strong>Client:</strong> <span id="modalClientName"></span></p>
+                    <p><strong>Assigned Painter:</strong> <span id="modalPainterName"></span></p>
+                    <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+                    <p><strong>Scheduled:</strong> <span id="modalScheduledDate"></span></p>
+                    <p><strong>Project Type:</strong> <span id="modalProjectType"></span></p>
+                    <p><strong>Rooms:</strong> <span id="modalRooms"></span></p>
+                    <p><strong>Paint Type:</strong> <span id="modalPaintType"></span></p>
+                    <p><strong>Special Instructions:</strong> <span id="modalSpecialInstructions"></span></p>
+                    <p><strong>Estimated Cost:</strong> <span id="modalEstimatedCost" class="font-bold text-blue-600"></span></p>
+                    <p><strong>Painter Payout:</strong> <span id="modalPainterPayout" class="font-bold text-green-600"></span></p>
+                    <p><strong>Current Status:</strong> <span id="modalStatus" class="font-bold"></span></p>
+                </div>
+                <div class="mt-6 border-t pt-4 flex justify-end space-x-3">
+                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="closeJobDetailsModal()">Close</button>
+                    <button id="assignPainterBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Assign/Reassign Painter</button>
+                    <button id="updateJobStatusBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Update Status</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Mock Job Data
+        const mockJobs = [
+            {
+                id: 'BP20250915', title: 'Office Renovation', clientName: 'Acme Corp.', painterName: 'N/A',
+                status: 'Pending', statusColor: 'yellow', projectType: 'Commercial', scheduledDate: 'TBD',
+                address: '10 Industrial Rd, Business Park', rooms: ['Main Office (800 sq.ft.)', 'Break Room (150 sq.ft.)'],
+                paintType: 'Low-VOC Commercial', specialInstructions: 'Flexible scheduling, client available after 5 PM.',
+                estimatedCost: 2500.00, painterPayout: 1500.00
+            },
+            {
+                id: 'BP20250810', title: 'Living Room & Kitchen Painting', clientName: 'Alex Johnson', painterName: 'Sarah Miller',
+                status: 'In Progress', statusColor: 'orange', projectType: 'Interior', scheduledDate: '2025-08-10',
+                address: '123 Main St, Anytown', rooms: ['Living Room (350 sq.ft.)', 'Kitchen (200 sq.ft.)'],
+                paintType: 'Eggshell', specialInstructions: 'Client prefers low VOC paint. Please protect new flooring.',
+                estimatedCost: 750.00, painterPayout: 450.00
+            },
+            {
+                id: 'BP20250901', title: 'Bedroom Re-painting', clientName: 'Maria Rodriguez', painterName: 'Sarah Miller',
+                status: 'Scheduled', statusColor: 'blue', projectType: 'Interior', scheduledDate: '2025-09-01',
+                address: '456 Oak Ave, Somewhere City', rooms: ['Master Bedroom (400 sq.ft.)'],
+                paintType: 'Matte', specialInstructions: 'Remove old wallpaper first.',
+                estimatedCost: 500.00, painterPayout: 300.00
+            },
+            {
+                id: 'BP20250720', title: 'Bedroom & Hallway Painting', clientName: 'David Lee', painterName: 'Laura Garcia',
+                status: 'Completed', statusColor: 'green', projectType: 'Interior', scheduledDate: '2025-07-20',
+                address: '789 Pine Ln, Otherville', rooms: ['Bedroom (300 sq.ft.)', 'Hallway (150 sq.ft.)'],
+                paintType: 'Satin', specialInstructions: 'N/A',
+                estimatedCost: 650.00, painterPayout: 400.00
+            },
+            {
+                id: 'BP20250605', title: 'Exterior House Painting', clientName: 'Emily Chen', painterName: 'David Wilson',
+                status: 'Completed', statusColor: 'green', projectType: 'Exterior', scheduledDate: '2025-06-05',
+                address: '101 Garden Rd, Greentown', rooms: ['Entire House Exterior'],
+                paintType: 'High-Gloss', specialInstructions: 'Need scaffolding.',
+                estimatedCost: 2000.00, painterPayout: 1200.00
+            },
+            {
+                id: 'BP20250820', title: 'Nursery Room Mural', clientName: 'Jessica Green', painterName: 'N/A',
+                status: 'Pending', statusColor: 'yellow', projectType: 'Interior', scheduledDate: '2025-08-20',
+                address: '555 Forest Ave, Greenwoods, OR', rooms: ['Nursery Room (200 sq.ft.)'],
+                paintType: 'Matte', specialInstructions: 'Theme: forest animals. Requires artistic skill.',
+                estimatedCost: 1200.00, painterPayout: 750.00
+            },
+            {
+                id: 'BP20250701', title: 'Small Office Repaint', clientName: 'Chris Brown', painterName: 'Michael Brown',
+                status: 'Completed', statusColor: 'green', projectType: 'Commercial', scheduledDate: '2025-07-01',
+                address: '444 Valley Way, Low Lands, AZ', rooms: ['Single Office (100 sq.ft.)'],
+                paintType: 'Washable', specialInstructions: 'Quick turnaround needed.',
+                estimatedCost: 400.00, painterPayout: 250.00
+            },
+            {
+                id: 'BP20250925', title: 'Bathroom Touch-up', clientName: 'John Doe', painterName: 'N/A',
+                status: 'Pending', statusColor: 'yellow', projectType: 'Interior', scheduledDate: '2025-09-25',
+                address: '123 Main St, Anytown, CA', rooms: ['Bathroom (50 sq.ft.)'],
+                paintType: 'Semi-Gloss', specialInstructions: 'Mildew resistant paint.',
+                estimatedCost: 250.00, painterPayout: 150.00
+            }
+        ];
+
+        let currentPage = 1;
+        const jobsPerPage = 5; // Number of jobs per page
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderJobs();
+            document.getElementById('jobSearch').addEventListener('input', renderJobs);
+            document.getElementById('statusFilter').addEventListener('change', renderJobs);
+            document.getElementById('prevPage').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderJobs();
+                }
+            });
+            document.getElementById('nextPage').addEventListener('click', () => {
+                const filteredJobs = getFilteredJobs();
+                if (currentPage * jobsPerPage < filteredJobs.length) {
+                    currentPage++;
+                    renderJobs();
+                }
+            });
+        });
+
+        function getFilteredJobs() {
+            const searchTerm = document.getElementById('jobSearch').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            return mockJobs.filter(job =>
+                (job.id.toLowerCase().includes(searchTerm) ||
+                 job.clientName.toLowerCase().includes(searchTerm) ||
+                 job.painterName.toLowerCase().includes(searchTerm)) &&
+                (statusFilter === '' || job.status === statusFilter)
+            ).sort((a, b) => new Date(b.scheduledDate) - new Date(a.scheduledDate)); // Sort by date descending
+        }
+
+        function renderJobs() {
+            const jobsTableBody = document.getElementById('jobsTableBody');
+            const noJobsFound = document.getElementById('noJobsFound');
+            jobsTableBody.innerHTML = ''; // Clear existing rows
+
+            const filteredJobs = getFilteredJobs();
+            
+            const startIndex = (currentPage - 1) * jobsPerPage;
+            const endIndex = startIndex + jobsPerPage;
+            const jobsToDisplay = filteredJobs.slice(startIndex, endIndex);
+
+            if (jobsToDisplay.length === 0) {
+                noJobsFound.classList.remove('hidden');
+            } else {
+                noJobsFound.classList.add('hidden');
+                jobsToDisplay.forEach(job => {
+                    const row = jobsTableBody.insertRow();
+                    row.className = 'whitespace-nowrap';
+                    
+                    let statusColorClass = '';
+                    if (job.status === 'Completed') {
+                        statusColorClass = 'bg-green-100 text-green-800';
+                    } else if (job.status === 'Pending') {
+                        statusColorClass = 'bg-yellow-100 text-yellow-800';
+                    } else if (job.status === 'In Progress') {
+                        statusColorClass = 'bg-orange-100 text-orange-800';
+                    } else if (job.status === 'Scheduled' || job.status === 'Assigned') {
+                        statusColorClass = 'bg-blue-100 text-blue-800';
+                    } else { // Canceled
+                        statusColorClass = 'bg-red-100 text-red-800';
+                    }
+
+                    row.innerHTML = `
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">${job.id}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${job.clientName}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">${job.painterName}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColorClass}">
+                                ${job.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">${job.projectType}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">${job.scheduledDate === 'TBD' ? 'TBD' : new Date(job.scheduledDate).toLocaleDateString()}</td>
+                        <td class="px-6 py-4 text-right text-sm font-medium">
+                            <a href="#" class="text-purple-600 hover:text-purple-900" onclick="openJobDetailsModal('${job.id}')">View Details</a>
+                        </td>
+                    `;
+                });
+            }
+
+            updatePaginationButtons(filteredJobs.length);
+        }
+
+        function updatePaginationButtons(totalJobs) {
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage * jobsPerPage >= totalJobs;
+        }
+
+        let currentJobForModal = null; // Store current job for modal actions
+
+        function openJobDetailsModal(jobId) {
+            currentJobForModal = mockJobs.find(job => job.id === jobId);
+            if (!currentJobForModal) return;
+
+            document.getElementById('modalJobTitle').textContent = currentJobForModal.title;
+            document.getElementById('modalJobId').textContent = currentJobForModal.id;
+            document.getElementById('modalClientName').textContent = currentJobForModal.clientName;
+            document.getElementById('modalPainterName').textContent = currentJobForModal.painterName;
+            document.getElementById('modalAddress').textContent = currentJobForModal.address;
+            document.getElementById('modalScheduledDate').textContent = currentJobForModal.scheduledDate === 'TBD' ? 'To Be Determined' : new Date(currentJobForModal.scheduledDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('modalProjectType').textContent = currentJobForModal.projectType;
+            document.getElementById('modalRooms').textContent = currentJobForModal.rooms.join(', ');
+            document.getElementById('modalPaintType').textContent = currentJobForModal.paintType;
+            document.getElementById('modalSpecialInstructions').textContent = currentJobForModal.specialInstructions || 'None specified.';
+            document.getElementById('modalEstimatedCost').textContent = `₹${currentJobForModal.estimatedCost.toFixed(2)}`;
+            document.getElementById('modalPainterPayout').textContent = `₹${currentJobForModal.painterPayout.toFixed(2)}`;
+            
+            const modalStatusSpan = document.getElementById('modalStatus');
+            modalStatusSpan.textContent = currentJobForModal.status;
+            modalStatusSpan.className = `font-bold text-${currentJobForModal.statusColor}-600`; // Apply color dynamically
+
+            // Setup buttons in modal
+            document.getElementById('assignPainterBtn').onclick = () => assignPainter(currentJobForModal.id);
+            document.getElementById('updateJobStatusBtn').onclick = () => updateJobStatus(currentJobForModal.id, currentJobForModal.status);
+
+            document.getElementById('jobDetailsModal').classList.remove('hidden');
+        }
+
+        function closeJobDetailsModal() {
+            document.getElementById('jobDetailsModal').classList.add('hidden');
+            currentJobForModal = null;
+        }
+
+        function assignPainter(jobId) {
+            const currentJob = mockJobs.find(job => job.id === jobId);
+            const painterList = mockPainters.filter(p => p.status === 'Active').map(p => p.name).join(', ');
+            const newPainterName = prompt(`Assign painter for Job ${jobId} (Current: ${currentJob.painterName}).\n\nAvailable painters: ${painterList}\n\nEnter new painter's name:`);
+            
+            if (newPainterName && newPainterName.trim() !== '') {
+                const assignedPainter = mockPainters.find(p => p.name.toLowerCase() === newPainterName.toLowerCase() && p.status === 'Active');
+                if (assignedPainter) {
+                    const jobIndex = mockJobs.findIndex(job => job.id === jobId);
+                    if (jobIndex > -1) {
+                        mockJobs[jobIndex].painterName = assignedPainter.name;
+                        if (mockJobs[jobIndex].status === 'Pending') {
+                            mockJobs[jobIndex].status = 'Assigned';
+                            mockJobs[jobIndex].statusColor = 'blue';
+                        }
+                    }
+                    alert(`Painter ${assignedPainter.name} assigned to Job ${jobId}.`);
+                    closeJobDetailsModal();
+                    renderJobs(); // Re-render the table
+                } else {
+                    alert('Painter not found or not active. Please check the name.');
+                }
+            }
+        }
+
+        function updateJobStatus(jobId, currentStatus) {
+            const newStatus = prompt(`Update status for Job ${jobId}. Current: ${currentStatus}\n\nEnter new status (e.g., 'Assigned', 'In Progress', 'Completed', 'Canceled'):`);
+            if (newStatus && newStatus.trim() !== '') {
+                const jobIndex = mockJobs.findIndex(job => job.id === jobId);
+                if (jobIndex > -1) {
+                    mockJobs[jobIndex].status = newStatus;
+                    let newStatusColor = 'gray'; // Default
+                    if (newStatus === 'Completed') newStatusColor = 'green';
+                    else if (newStatus === 'Pending') newStatusColor = 'yellow';
+                    else if (newStatus === 'In Progress') newStatusColor = 'orange';
+                    else if (newStatus === 'Scheduled' || newStatus === 'Assigned') newStatusColor = 'blue';
+                    else if (newStatus === 'Canceled') newStatusColor = 'red';
+                    mockJobs[jobIndex].statusColor = newStatusColor;
+                }
+                alert(`Job ${jobId} status updated to: ${newStatus}.`);
+                closeJobDetailsModal();
+                renderJobs(); // Re-render the table
+            }
+        }
+    </script>
+</body>
+</html>

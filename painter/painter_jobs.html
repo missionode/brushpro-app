@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - My Jobs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-indigo-700 text-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="painter_dashboard.html" class="text-2xl font-bold flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-2.414-2.414A1 1 0 0015.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
+                BrushPro Painter
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="painter_dashboard.html" class="text-white hover:text-indigo-200 font-medium">Dashboard</a>
+                <a href="painter_jobs.html" class="text-indigo-200 font-medium">My Jobs</a>
+                <a href="painter_profile.html" class="text-white hover:text-indigo-200 font-medium">Profile</a>
+                <a href="painter_earnings.html" class="text-white hover:text-indigo-200 font-medium">Earnings</a>
+                <a href="../shared/shared_help_support.html" class="text-white hover:text-indigo-200 font-medium">Support</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-indigo-800 shadow-lg py-2 mt-2 hidden">
+            <a href="painter_dashboard.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Dashboard</a>
+            <a href="painter_jobs.html" class="block px-4 py-2 text-indigo-200 hover:bg-indigo-700">My Jobs</a>
+            <a href="painter_profile.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Profile</a>
+            <a href="painter_earnings.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Earnings</a>
+            <a href="../shared/shared_help_support.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Support</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-400 hover:bg-red-500">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">My Assigned Jobs</h1>
+        <p class="text-lg text-gray-600 mb-8">Manage your painting projects and update their progress.</p>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <div class="flex border-b border-gray-200 mb-6">
+                <button class="px-4 py-2 text-lg font-medium border-b-2 border-indigo-600 text-indigo-600 focus:outline-none" id="activeJobsTab">Active & Upcoming</button>
+                <button class="px-4 py-2 text-lg font-medium border-b-2 border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-800 focus:outline-none" id="completedJobsTab">Completed</button>
+            </div>
+
+            <div id="activeJobsContent">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Active & Upcoming Jobs</h2>
+                <div id="activeJobsList" class="space-y-4">
+                    </div>
+                <p id="noActiveJobs" class="text-gray-500 italic mt-4 hidden">No active or upcoming jobs at the moment.</p>
+            </div>
+
+            <div id="completedJobsContent" class="hidden">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Completed Jobs</h2>
+                <div id="completedJobsList" class="space-y-4">
+                    </div>
+                <p id="noCompletedJobs" class="text-gray-500 italic mt-4 hidden">No completed jobs to display.</p>
+            </div>
+        </div>
+
+        <div id="jobDetailsModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6 relative">
+                <button class="absolute top-3 right-3 text-gray-500 hover:text-gray-800" onclick="closeJobDetailsModal()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4" id="modalJobTitle">Job Details</h3>
+                <div id="modalJobDetails" class="space-y-3 text-gray-700">
+                    <p><strong>Job ID:</strong> <span id="modalJobId"></span></p>
+                    <p><strong>Client Name:</strong> <span id="modalClientName"></span></p>
+                    <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+                    <p><strong>Scheduled:</strong> <span id="modalScheduledDate"></span></p>
+                    <p><strong>Project Type:</strong> <span id="modalProjectType"></span></p>
+                    <p><strong>Rooms:</strong> <span id="modalRooms"></span></p>
+                    <p><strong>Paint Type:</strong> <span id="modalPaintType"></span></p>
+                    <p><strong>Special Instructions:</strong> <span id="modalSpecialInstructions"></span></p>
+                    <p><strong>Estimated Payout:</strong> <span id="modalPayout" class="font-bold text-green-600"></span></p>
+                    <p><strong>Current Status:</strong> <span id="modalStatus" class="font-bold"></span></p>
+                </div>
+                <div class="mt-6 border-t pt-4 flex justify-end space-x-3">
+                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="closeJobDetailsModal()">Close</button>
+                    <button id="updateStatusBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Update Status</button>
+                    <button id="contactClientBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Contact Client</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        const mockJobs = [
+            {
+                id: 'BP20250810',
+                title: 'Living Room & Kitchen Painting',
+                clientName: 'Alex Johnson',
+                address: '123 Main St, Anytown',
+                scheduledDate: 'August 10, 2025 (Morning)',
+                projectType: 'Interior',
+                rooms: ['Living Room (350 sq.ft.)', 'Kitchen (200 sq.ft.)'],
+                paintType: 'Eggshell',
+                specialInstructions: 'Client prefers low VOC paint. Please protect new flooring.',
+                payout: 450.00,
+                status: 'Assigned',
+                statusColor: 'amber',
+                type: 'active'
+            },
+            {
+                id: 'BP20250901',
+                title: 'Bedroom Re-painting',
+                clientName: 'Maria Rodriguez',
+                address: '456 Oak Ave, Somewhere City',
+                scheduledDate: 'September 1, 2025 (Afternoon)',
+                projectType: 'Interior',
+                rooms: ['Master Bedroom (400 sq.ft.)'],
+                paintType: 'Matte',
+                specialInstructions: 'Remove old wallpaper first.',
+                payout: 300.00,
+                status: 'Scheduled',
+                statusColor: 'blue',
+                type: 'active'
+            },
+            {
+                id: 'BP20250720',
+                title: 'Bedroom & Hallway Painting',
+                clientName: 'David Lee',
+                address: '789 Pine Ln, Otherville',
+                completedDate: 'July 20, 2025',
+                projectType: 'Interior',
+                rooms: ['Bedroom (300 sq.ft.)', 'Hallway (150 sq.ft.)'],
+                paintType: 'Satin',
+                specialInstructions: 'N/A',
+                payout: 400.00,
+                status: 'Completed',
+                statusColor: 'emerald',
+                type: 'completed'
+            },
+            {
+                id: 'BP20250605',
+                title: 'Exterior House Painting',
+                clientName: 'Emily Chen',
+                address: '101 Garden Rd, Greentown',
+                completedDate: 'June 05, 2025',
+                projectType: 'Exterior',
+                rooms: ['Entire House Exterior'],
+                paintType: 'High-Gloss',
+                specialInstructions: 'Need scaffolding.',
+                payout: 1200.00,
+                status: 'Completed',
+                statusColor: 'emerald',
+                type: 'completed'
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderJobs('active'); // Default to active jobs
+            setupTabs();
+        });
+
+        function setupTabs() {
+            const activeJobsTab = document.getElementById('activeJobsTab');
+            const completedJobsTab = document.getElementById('completedJobsTab');
+            const activeJobsContent = document.getElementById('activeJobsContent');
+            const completedJobsContent = document.getElementById('completedJobsContent');
+
+            activeJobsTab.addEventListener('click', () => {
+                activeJobsTab.classList.add('border-indigo-600', 'text-indigo-600');
+                activeJobsTab.classList.remove('border-transparent', 'text-gray-600', 'hover:border-gray-300', 'hover:text-gray-800');
+                completedJobsTab.classList.remove('border-indigo-600', 'text-indigo-600');
+                completedJobsTab.classList.add('border-transparent', 'text-gray-600', 'hover:border-gray-300', 'hover:text-gray-800');
+                activeJobsContent.classList.remove('hidden');
+                completedJobsContent.classList.add('hidden');
+                renderJobs('active');
+            });
+
+            completedJobsTab.addEventListener('click', () => {
+                completedJobsTab.classList.add('border-indigo-600', 'text-indigo-600');
+                completedJobsTab.classList.remove('border-transparent', 'text-gray-600', 'hover:border-gray-300', 'hover:text-gray-800');
+                activeJobsTab.classList.remove('border-indigo-600', 'text-indigo-600');
+                activeJobsTab.classList.add('border-transparent', 'text-gray-600', 'hover:border-gray-300', 'hover:text-gray-800');
+                completedJobsContent.classList.remove('hidden');
+                activeJobsContent.classList.add('hidden');
+                renderJobs('completed');
+            });
+        }
+
+        function renderJobs(type) {
+            const listContainer = type === 'active' ? document.getElementById('activeJobsList') : document.getElementById('completedJobsList');
+            const noJobsMessage = type === 'active' ? document.getElementById('noActiveJobs') : document.getElementById('noCompletedJobs');
+            listContainer.innerHTML = '';
+            let jobsFound = false;
+
+            mockJobs.filter(job => job.type === type).forEach(job => {
+                jobsFound = true;
+                const jobCard = document.createElement('div');
+                jobCard.className = `job-card border border-gray-200 rounded-lg p-5 flex flex-col md:flex-row justify-between items-start md:items-center`;
+
+                jobCard.innerHTML = `
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-1">Job #${job.id} - ${job.title}</h3>
+                        <p class="text-gray-700">Client: <span class="font-medium">${job.clientName}</span></p>
+                        <p class="text-gray-700">${type === 'active' ? 'Scheduled' : 'Completed'}: <span class="font-medium">${job.scheduledDate || job.completedDate}</span></p>
+                        <p class="text-gray-700">Status: <span class="font-medium text-${job.statusColor}-600">${job.status}</span></p>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-3">
+                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm" onclick="openJobDetailsModal('${job.id}')">View Details</button>
+                        ${type === 'active' ? `
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm" onclick="contactClient('${job.clientName}', '${job.id}')">Contact Client</button>
+                        ` : ''}
+                    </div>
+                `;
+                listContainer.appendChild(jobCard);
+            });
+
+            if (!jobsFound) {
+                noJobsMessage.classList.remove('hidden');
+            } else {
+                noJobsMessage.classList.add('hidden');
+            }
+        }
+
+        let currentJobForModal = null; // Store current job for modal actions
+
+        function openJobDetailsModal(jobId) {
+            currentJobForModal = mockJobs.find(job => job.id === jobId);
+            if (!currentJobForModal) return;
+
+            document.getElementById('modalJobTitle').textContent = `Job Details: ${currentJobForModal.title}`;
+            document.getElementById('modalJobId').textContent = currentJobForModal.id;
+            document.getElementById('modalClientName').textContent = currentJobForModal.clientName;
+            document.getElementById('modalAddress').textContent = currentJobForModal.address;
+            document.getElementById('modalScheduledDate').textContent = currentJobForModal.scheduledDate || currentJobForModal.completedDate;
+            document.getElementById('modalProjectType').textContent = currentJobForModal.projectType;
+            document.getElementById('modalRooms').textContent = currentJobForModal.rooms.join(', ');
+            document.getElementById('modalPaintType').textContent = currentJobForModal.paintType;
+            document.getElementById('modalSpecialInstructions').textContent = currentJobForModal.specialInstructions || 'None specified.';
+            document.getElementById('modalPayout').textContent = `$${currentJobForModal.payout.toFixed(2)}`;
+            
+            const modalStatusSpan = document.getElementById('modalStatus');
+            modalStatusSpan.textContent = currentJobForModal.status;
+            modalStatusSpan.className = `font-bold text-${currentJobForModal.statusColor}-600`; // Apply color dynamically
+
+            // Show/hide update status button based on job type
+            const updateStatusBtn = document.getElementById('updateStatusBtn');
+            const contactClientBtn = document.getElementById('contactClientBtn');
+            if (currentJobForModal.type === 'active') {
+                updateStatusBtn.classList.remove('hidden');
+                contactClientBtn.classList.remove('hidden');
+                updateStatusBtn.onclick = () => updateJobStatus(currentJobForModal.id, currentJobForModal.status);
+                contactClientBtn.onclick = () => contactClient(currentJobForModal.clientName, currentJobForModal.id);
+            } else {
+                updateStatusBtn.classList.add('hidden');
+                contactClientBtn.classList.add('hidden');
+            }
+
+            document.getElementById('jobDetailsModal').classList.remove('hidden');
+        }
+
+        function closeJobDetailsModal() {
+            document.getElementById('jobDetailsModal').classList.add('hidden');
+            currentJobForModal = null;
+        }
+
+        function updateJobStatus(jobId, currentStatus) {
+            const newStatus = prompt(`Update status for Job ${jobId}. Current: ${currentStatus}\n\nEnter new status (e.g., 'On-site', 'Completed'):`);
+            if (newStatus && newStatus.trim() !== '') {
+                // In a real app, send update to server and re-render jobs
+                alert(`Job ${jobId} status updated to: ${newStatus}`);
+                // Find job in mockJobs and update
+                const jobIndex = mockJobs.findIndex(job => job.id === jobId);
+                if (jobIndex > -1) {
+                    mockJobs[jobIndex].status = newStatus;
+                    mockJobs[jobIndex].statusColor = 'indigo'; // Example: default color for manual update
+                    if (newStatus.toLowerCase() === 'completed') {
+                        mockJobs[jobIndex].type = 'completed';
+                        mockJobs[jobIndex].statusColor = 'emerald';
+                        mockJobs[jobIndex].completedDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                    }
+                }
+                closeJobDetailsModal();
+                renderJobs('active'); // Re-render active tab
+                renderJobs('completed'); // Re-render completed tab
+                // After update, if job moved to completed, might need to switch tabs
+                if (newStatus.toLowerCase() === 'completed') {
+                    document.getElementById('completedJobsTab').click();
+                }
+            }
+        }
+
+        function contactClient(clientName, jobId) {
+            alert(`Initiating chat/call with client ${clientName} for Job ${jobId}.`);
+            // In a real app: window.location.href = `painter_chat.html?client=${clientName}&jobId=${jobId}`;
+        }
+    </script>
+</body>
+</html>

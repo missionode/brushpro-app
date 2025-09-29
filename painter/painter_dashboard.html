@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - Painter Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-indigo-700 text-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="painter_dashboard.html" class="text-2xl font-bold flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-2.414-2.414A1 1 0 0015.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
+                BrushPro Painter
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="painter_dashboard.html" class="text-white hover:text-indigo-200 font-medium">Dashboard</a>
+                <a href="painter_jobs.html" class="text-white hover:text-indigo-200 font-medium">My Jobs</a>
+                <a href="painter_profile.html" class="text-white hover:text-indigo-200 font-medium">Profile</a>
+                <a href="painter_earnings.html" class="text-white hover:text-indigo-200 font-medium">Earnings</a>
+                <a href="../shared/shared_help_support.html" class="text-white hover:text-indigo-200 font-medium">Support</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-indigo-800 shadow-lg py-2 mt-2 hidden">
+            <a href="painter_dashboard.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Dashboard</a>
+            <a href="painter_jobs.html" class="block px-4 py-2 text-white hover:bg-indigo-700">My Jobs</a>
+            <a href="painter_profile.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Profile</a>
+            <a href="painter_earnings.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Earnings</a>
+            <a href="../shared/shared_help_support.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Support</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-400 hover:bg-red-500">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Welcome, Sarah!</h1>
+        <p class="text-lg text-gray-600 mb-8">Here's a quick overview of your current activity.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="p-3 bg-blue-100 rounded-full">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                </div>
+                <div>
+                    <p class="text-gray-500">Active Jobs</p>
+                    <p class="text-3xl font-bold text-gray-900" id="activeJobsCount">2</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="p-3 bg-green-100 rounded-full">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <div>
+                    <p class="text-gray-500">Next Job</p>
+                    <p class="text-xl font-bold text-gray-900" id="nextJobDate">Aug 10, 2025</p>
+                    <p class="text-sm text-gray-600" id="nextJobTitle">Living Room & Kitchen</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="p-3 bg-yellow-100 rounded-full">
+                    <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V3m0 9v3m0-10.99A7.001 7.001 0 003 12a7.001 7.001 0 0014 0m-6 0v1.5a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5V12m0 0H9m1.5-6H10m4 0h.007M12 12h.01"></path></svg>
+                </div>
+                <div>
+                    <p class="text-gray-500">Pending Payout</p>
+                    <p class="text-3xl font-bold text-gray-900" id="pendingPayout">₹850.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upcoming Jobs</h2>
+            <div id="upcomingJobsList" class="space-y-4">
+                <div class="upcoming-job-item border border-gray-200 rounded-lg p-4 flex justify-between items-center">
+                    <div>
+                        <p class="font-semibold text-gray-800">Job #BP20250810 - Living Room & Kitchen</p>
+                        <p class="text-gray-600 text-sm">Client: Alex Johnson - <span class="text-blue-600">View Details</span></p>
+                        <p class="text-gray-600 text-sm">Scheduled: Aug 10, 2025 (Morning)</p>
+                    </div>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition duration-200" onclick="viewJob('BP20250810')">Go to Job</button>
+                </div>
+                <div class="upcoming-job-item border border-gray-200 rounded-lg p-4 flex justify-between items-center">
+                    <div>
+                        <p class="font-semibold text-gray-800">Job #BP20250901 - Bedroom Re-painting</p>
+                        <p class="text-gray-600 text-sm">Client: Maria Rodriguez - <span class="text-blue-600">View Details</span></p>
+                        <p class="text-gray-600 text-sm">Scheduled: Sep 01, 2025 (Afternoon)</p>
+                    </div>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition duration-200" onclick="viewJob('BP20250901')">Go to Job</button>
+                </div>
+                <p id="noUpcomingJobs" class="text-gray-500 italic hidden">No upcoming jobs. Great time for a break!</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Recent Notifications</h2>
+            <div id="notificationsList" class="space-y-3">
+                <div class="flex items-start">
+                    <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <p class="text-gray-700"><strong>New Job Assigned:</strong> Job #BP20250901 - Bedroom Re-painting. Check "My Jobs" for details.</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="w-6 h-6 text-blue-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 00-2 0v1h2V3zM7 7H5V5h2v2zm7-4h-2v1h2V3zm0 4h-2V5h2v2zM4 11H3V9h1v2zm0 4H3v-2h1v2zm13-8h-1V7h1v2zm0 4h-1v-2h1v2zM12 17h-2v-1h2v1zM12 3v1h-2V3h2zm-4 8H7V9h1v2zm8 0h-1V9h1v2zm-4 8H7V17h1v2zm8 0h-1V17h1v2zm1-8V9h-1v2h1zm-1-4V5h-1v2h1zM5 19V7a2 2 0 012-2h6a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2z"></path></svg>
+                    <p class="text-gray-700">Client Alex Johnson sent a message regarding Job #BP20250810.</p>
+                </div>
+            </div>
+             <p id="noNotifications" class="text-gray-500 italic hidden mt-4">No new notifications.</p>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        function viewJob(jobId) {
+            alert(`Navigating to details for Job ID: ${jobId}.`);
+            // In a real app: window.location.href = `painter_job_details.html?id=${jobId}`;
+        }
+
+        // Mock data for dashboard cards and lists
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeJobs = [
+                { id: 'BP20250810', title: 'Living Room & Kitchen', client: 'Alex Johnson', date: 'Aug 10, 2025', time: 'Morning' },
+                { id: 'BP20250901', title: 'Bedroom Re-painting', client: 'Maria Rodriguez', date: 'Sep 01, 2025', time: 'Afternoon' }
+            ];
+
+            const pendingPayout = 850.00;
+
+            document.getElementById('activeJobsCount').textContent = activeJobs.length;
+            
+            if (activeJobs.length > 0) {
+                // Assuming activeJobs are sorted by date, pick the first one as next
+                const nextJob = activeJobs.sort((a,b) => new Date(a.date) - new Date(b.date))[0];
+                document.getElementById('nextJobDate').textContent = nextJob.date;
+                document.getElementById('nextJobTitle').textContent = nextJob.title;
+            } else {
+                document.getElementById('nextJobDate').textContent = 'No Jobs';
+                document.getElementById('nextJobTitle').textContent = 'Time to relax!';
+            }
+
+            document.getElementById('pendingPayout').textContent = `₹${pendingPayout.toFixed(2)}`;
+
+            // Populate Upcoming Jobs list (already hardcoded for demo, but could be dynamic)
+            // if (activeJobs.length === 0) {
+            //     document.getElementById('upcomingJobsList').innerHTML = '<p class="text-gray-500 italic">No upcoming jobs. Great time for a break!</p>';
+            // }
+
+            // Populate Notifications (already hardcoded for demo, but could be dynamic)
+            // if (noNotifications) {
+            //     document.getElementById('notificationsList').classList.add('hidden');
+            //     document.getElementById('noNotifications').classList.remove('hidden');
+            // }
+        });
+    </script>
+</body>
+</html>

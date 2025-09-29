@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - Admin Settings</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-purple-700 text-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="admin_dashboard.html" class="text-2xl font-bold flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                BrushPro Admin
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="admin_dashboard.html" class="text-white hover:text-purple-200 font-medium">Dashboard</a>
+                <a href="admin_clients.html" class="text-white hover:text-purple-200 font-medium">Clients</a>
+                <a href="admin_painters.html" class="text-white hover:text-purple-200 font-medium">Painters</a>
+                <a href="admin_jobs.html" class="text-white hover:text-purple-200 font-medium">Jobs</a>
+                <a href="admin_settings.html" class="text-purple-200 font-medium">Settings</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-purple-800 shadow-lg py-2 mt-2 hidden">
+            <a href="admin_dashboard.html" class="block px-4 py-2 text-white hover:bg-purple-700">Dashboard</a>
+            <a href="admin_clients.html" class="block px-4 py-2 text-white hover:bg-purple-700">Clients</a>
+            <a href="admin_painters.html" class="block px-4 py-2 text-white hover:bg-purple-700">Painters</a>
+            <a href="admin_jobs.html" class="block px-4 py-2 text-white hover:bg-purple-700">Jobs</a>
+            <a href="admin_settings.html" class="block px-4 py-2 text-purple-200 hover:bg-purple-700">Settings</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-400 hover:bg-red-500">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Admin Settings</h1>
+        <p class="text-lg text-gray-600 mb-8">Configure platform-wide settings and parameters.</p>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">General Settings</h2>
+            <form id="generalSettingsForm" class="space-y-6">
+                <div>
+                    <label for="platformName" class="block text-sm font-medium text-gray-700 mb-1">Platform Name</label>
+                    <input type="text" id="platformName" value="BrushPro"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label for="adminEmail" class="block text-sm font-medium text-gray-700 mb-1">Admin Contact Email</label>
+                    <input type="email" id="adminEmail" value="admin@brushpro.com"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label for="defaultCurrency" class="block text-sm font-medium text-gray-700 mb-1">Default Currency</label>
+                    <select id="defaultCurrency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="INR" selected>IND - Indian Rupee</option>
+                        <option value="USD">USD - U.S. Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="maintenanceMode" class="form-checkbox h-5 w-5 text-purple-600">
+                    <label for="maintenanceMode" class="ml-2 block text-sm text-gray-900">Enable Maintenance Mode</label>
+                </div>
+                <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200">Save General Settings</button>
+            </form>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">Pricing & Commissions</h2>
+            <form id="pricingSettingsForm" class="space-y-6">
+                <div>
+                    <label for="commissionRate" class="block text-sm font-medium text-gray-700 mb-1">Painter Commission Rate (%)</label>
+                    <input type="number" id="commissionRate" value="60" min="0" max="100" step="1"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <p class="mt-1 text-sm text-gray-500">Percentage of job value paid to the painter.</p>
+                </div>
+                <div>
+                    <label for="minJobPrice" class="block text-sm font-medium text-gray-700 mb-1">Minimum Job Price ($)</label>
+                    <input type="number" id="minJobPrice" value="150" min="0" step="10"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <p class="mt-1 text-sm text-gray-500">Minimum price for any new job request.</p>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="dynamicPricing" class="form-checkbox h-5 w-5 text-purple-600">
+                    <label for="dynamicPricing" class="ml-2 block text-sm text-gray-900">Enable Dynamic Pricing (based on demand/painter availability)</label>
+                </div>
+                <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200">Save Pricing Settings</button>
+            </form>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">Notification Settings</h2>
+            <form id="notificationSettingsForm" class="space-y-6">
+                <div class="flex items-start">
+                    <input type="checkbox" id="newJobNotification" class="form-checkbox h-5 w-5 text-purple-600 mt-1">
+                    <label for="newJobNotification" class="ml-2 block text-sm text-gray-900">Notify Admins of New Job Requests</label>
+                </div>
+                <div class="flex items-start">
+                    <input type="checkbox" id="newPainterNotification" class="form-checkbox h-5 w-5 text-purple-600 mt-1">
+                    <label for="newPainterNotification" class="ml-2 block text-sm text-gray-900">Notify Admins of New Painter Applications</label>
+                </div>
+                <div class="flex items-start">
+                    <input type="checkbox" id="paymentFailureNotification" class="form-checkbox h-5 w-5 text-purple-600 mt-1" checked>
+                    <label for="paymentFailureNotification" class="ml-2 block text-sm text-gray-900">Notify Admins of Payment Failures</label>
+                </div>
+                <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200">Save Notification Settings</button>
+            </form>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Event listener for General Settings form submission
+        document.getElementById('generalSettingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const platformName = document.getElementById('platformName').value;
+            const adminEmail = document.getElementById('adminEmail').value;
+            const defaultCurrency = document.getElementById('defaultCurrency').value;
+            const maintenanceMode = document.getElementById('maintenanceMode').checked;
+            console.log('General Settings:', { platformName, adminEmail, defaultCurrency, maintenanceMode });
+            alert('General settings saved!');
+        });
+
+        // Event listener for Pricing Settings form submission
+        document.getElementById('pricingSettingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const commissionRate = document.getElementById('commissionRate').value;
+            const minJobPrice = document.getElementById('minJobPrice').value;
+            const dynamicPricing = document.getElementById('dynamicPricing').checked;
+            console.log('Pricing Settings:', { commissionRate, minJobPrice, dynamicPricing });
+            alert('Pricing settings saved!');
+        });
+
+        // Event listener for Notification Settings form submission
+        document.getElementById('notificationSettingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newJobNotification = document.getElementById('newJobNotification').checked;
+            const newPainterNotification = document.getElementById('newPainterNotification').checked;
+            const paymentFailureNotification = document.getElementById('paymentFailureNotification').checked;
+            console.log('Notification Settings:', { newJobNotification, newPainterNotification, paymentFailureNotification });
+            alert('Notification settings saved!');
+        });
+    </script>
+</body>
+</html>

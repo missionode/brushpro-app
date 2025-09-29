@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - Painter Earnings</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-indigo-700 text-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="painter_dashboard.html" class="text-2xl font-bold flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-2.414-2.414A1 1 0 0015.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
+                BrushPro Painter
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="painter_dashboard.html" class="text-white hover:text-indigo-200 font-medium">Dashboard</a>
+                <a href="painter_jobs.html" class="text-white hover:text-indigo-200 font-medium">My Jobs</a>
+                <a href="painter_profile.html" class="text-white hover:text-indigo-200 font-medium">Profile</a>
+                <a href="painter_earnings.html" class="text-indigo-200 font-medium">Earnings</a>
+                <a href="../shared/shared_help_support.html" class="text-white hover:text-indigo-200 font-medium">Support</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-indigo-800 shadow-lg py-2 mt-2 hidden">
+            <a href="painter_dashboard.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Dashboard</a>
+            <a href="painter_jobs.html" class="block px-4 py-2 text-white hover:bg-indigo-700">My Jobs</a>
+            <a href="painter_profile.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Profile</a>
+            <a href="painter_earnings.html" class="block px-4 py-2 text-indigo-200 hover:bg-indigo-700">Earnings</a>
+            <a href="../shared/shared_help_support.html" class="block px-4 py-2 text-white hover:bg-indigo-700">Support</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-400 hover:bg-red-500">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">My Earnings</h1>
+        <p class="text-lg text-gray-600 mb-8">View your payment history and track pending payouts.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="p-3 bg-green-100 rounded-full">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V3m0 9v3m0-10.99A7.001 7.001 0 003 12a7.001 7.001 0 0014 0m-6 0v1.5a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5V12m0 0H9m1.5-6H10m4 0h.007M12 12h.01"></path></svg>
+                </div>
+                <div>
+                    <p class="text-gray-500">Total Earned (YTD)</p>
+                    <p class="text-3xl font-bold text-gray-900" id="totalEarned">₹15,400.00</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="p-3 bg-yellow-100 rounded-full">
+                    <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V3m0 9v3m0-10.99A7.001 7.001 0 003 12a7.001 7.001 0 0014 0m-6 0v1.5a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5V12m0 0H9m1.5-6H10m4 0h.007M12 12h.01"></path></svg>
+                </div>
+                <div>
+                    <p class="text-gray-500">Pending Payout</p>
+                    <p class="text-3xl font-bold text-gray-900" id="pendingPayout">₹850.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Payout History</h2>
+            <div class="mb-4 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                <input type="month" id="filterMonth" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button id="applyFilter" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Apply Filter</button>
+                <button id="clearFilter" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-200">Clear Filter</button>
+            </div>
+
+            <div id="payoutHistoryList" class="space-y-4">
+                </div>
+            <p id="noPayoutsMessage" class="text-gray-500 italic hidden mt-4">No payouts found for the selected period.</p>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Mock Payout Data
+        const mockPayouts = [
+            {
+                id: 'PAY001',
+                date: '2025-07-25',
+                amount: 1500.00,
+                jobs: [
+                    { id: 'BP20250720', title: 'Bedroom & Hallway Painting', amount: 400.00 },
+                    { id: 'BP20250715', title: 'Kitchen Cabinet Refinishing', amount: 600.00 },
+                    { id: 'BP20250701', title: 'Small Office Repaint', amount: 500.00 }
+                ]
+            },
+            {
+                id: 'PAY002',
+                date: '2025-06-15',
+                amount: 2000.00,
+                jobs: [
+                    { id: 'BP20250605', title: 'Exterior House Painting', amount: 1200.00 },
+                    { id: 'BP20250601', title: 'Garage Floor Coating', amount: 800.00 }
+                ]
+            },
+            {
+                id: 'PAY003',
+                date: '2025-05-30',
+                amount: 1000.00,
+                jobs: [
+                    { id: 'BP20250520', title: 'Dining Room Accent Wall', amount: 250.00 },
+                    { id: 'BP20250510', title: 'Nursery Room Mural', amount: 750.00 }
+                ]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPayoutHistory();
+            updateSummaryCards();
+
+            document.getElementById('applyFilter').addEventListener('click', renderPayoutHistory);
+            document.getElementById('clearFilter').addEventListener('click', () => {
+                document.getElementById('filterMonth').value = ''; // Clear the input
+                renderPayoutHistory();
+            });
+        });
+
+        function updateSummaryCards() {
+            const totalEarned = mockPayouts.reduce((sum, payout) => sum + payout.amount, 0);
+            const pendingPayout = 850.00; // Hardcoded from dashboard for consistency
+
+            document.getElementById('totalEarned').textContent = `₹${totalEarned.toFixed(2)}`;
+            document.getElementById('pendingPayout').textContent = `₹${pendingPayout.toFixed(2)}`;
+        }
+
+        function renderPayoutHistory() {
+            const payoutHistoryList = document.getElementById('payoutHistoryList');
+            const noPayoutsMessage = document.getElementById('noPayoutsMessage');
+            const filterMonth = document.getElementById('filterMonth').value; // YYYY-MM format
+
+            payoutHistoryList.innerHTML = ''; // Clear previous entries
+            let payoutsFound = false;
+
+            const filteredPayouts = mockPayouts.filter(payout => {
+                if (!filterMonth) return true; // No filter, show all
+                return payout.date.startsWith(filterMonth);
+            }).sort((a,b) => new Date(b.date) - new Date(a.date)); // Sort by date descending
+
+            filteredPayouts.forEach(payout => {
+                payoutsFound = true;
+                const payoutCard = document.createElement('div');
+                payoutCard.className = 'payout-card border border-gray-200 rounded-lg p-5 mb-4';
+                
+                let jobsDetail = payout.jobs.map(job => `<li class="ml-4 text-sm text-gray-600">Job #${job.id} - ${job.title}: <span class="font-medium">₹${job.amount.toFixed(2)}</span></li>`).join('');
+
+                payoutCard.innerHTML = `
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-semibold text-gray-800">Payout ID: ${payout.id}</h3>
+                        <span class="text-2xl font-bold text-green-600">₹${payout.amount.toFixed(2)}</span>
+                    </div>
+                    <p class="text-gray-700 mb-2">Payout Date: <span class="font-medium">${new Date(payout.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span></p>
+                    <p class="text-gray-700 font-medium mb-1">Jobs Included:</p>
+                    <ul class="list-disc pl-5">
+                        ${jobsDetail}
+                    </ul>
+                `;
+                payoutHistoryList.appendChild(payoutCard);
+            });
+
+            if (!payoutsFound) {
+                noPayoutsMessage.classList.remove('hidden');
+            } else {
+                noPayoutsMessage.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

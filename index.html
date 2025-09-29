@@ -1,78 +1,132 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title data-bind="brand">IdleList</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:,">
-<link rel="stylesheet" href="css/styles.css">
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - Professional Painting Services</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-slate-50 text-slate-800">
-<header class="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-slate-200">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-    <a href="index.html" class="flex items-center gap-3">
-      <div id="logoMark" class="h-9 w-9 rounded-2xl bg-emerald-600 text-white grid place-items-center text-lg font-bold"></div>
-      <div>
-        <h1 class="text-xl font-semibold" data-bind="brand">IdleList</h1>
-        <p class="text-sm text-slate-500" data-bind="tagline"></p>
-      </div>
-    </a>
-    <nav class="flex items-center gap-4 text-sm">
-      <a class="nav-link" href="index.html" data-bind="nav.dashboard"></a>
-      <a class="nav-link" href="items.html" data-bind="nav.items"></a>
-      <a class="nav-link" href="market.html" data-bind="nav.market"></a>
-      <a class="nav-link" href="prefs.html" data-bind="nav.prefs"></a>
-      <a class="nav-link" href="help.html" data-bind="nav.help"></a>
-    </nav>
-  </div>
-</header>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
 
-<main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
-  <section>
-    <h2 class="text-2xl font-semibold mb-4" data-bind="dashboard.title"></h2>
-    <div id="stats" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3"></div>
-  </section>
+    <header class="bg-white shadow-sm py-4 border-b border-gray-100">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-600 flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-2.414-2.414A1 1 0 0015.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
+                BrushPro
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="#features" class="text-gray-700 hover:text-blue-600 font-medium">Features</a>
+                <a href="#painters" class="text-gray-700 hover:text-blue-600 font-medium">For Painters</a>
+                <a href="login.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Login</a>
+                <a href="register.html" class="text-blue-600 border border-blue-600 hover:bg-blue-50 font-semibold py-2 px-4 rounded-lg transition duration-200">Register</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-white shadow-lg py-2 mt-2 hidden">
+            <a href="#features" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Features</a>
+            <a href="#painters" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">For Painters</a>
+            <a href="login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login</a>
+            <a href="register.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Register</a>
+        </nav>
+    </header>
 
-  <section>
-    <div class="flex items-center justify-between mb-3">
-      <h3 class="text-xl font-semibold" data-bind="dashboard.needsAction"></h3>
-      <a href="items.html" class="px-3 py-2 rounded-xl bg-slate-900 text-white text-sm" data-bind="items.add"></a>
-    </div>
-    <div id="needsAction" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
-  </section>
-</main>
+    <main class="container mx-auto px-4 py-12 text-center">
+        <section class="hero mb-16">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-800 leading-tight mb-6">
+                Your Vision. Our Brushes. <span class="text-blue-600">Perfectly Painted.</span>
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-10">
+                BrushPro connects you with top-rated professional painters for any project, big or small. Get instant quotes, visualize colors, and track your job with ease.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="client_service_selection.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    Get a Free Quote
+                </a>
+                <a href="register.html" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    Join as a Painter
+                </a>
+            </div>
+        </section>
 
-<script type="application/json" id="strings">
-{
-  "brand": "IdleList",
-  "tagline": "Declutter smarter. Mark idle things for sale or rent.",
-  "nav": { "dashboard": "Dashboard", "items": "My Items", "market": "Marketplace", "prefs": "Preferences", "help": "Help" },
-  "dashboard": { "title": "Overview", "needsAction": "Needs Action", "stats": { "total": "Total", "inUse": "In Use", "idle": "Idle", "planned": "Planned", "forSale": "For Sale", "forRent": "For Rent" } },
-  "items": { "title": "My Items", "add": "Add Item", "save": "Save Item", "update": "Update Item", "checkin": "I used this today", "listSale": "List for Sale", "listRent": "List for Rent" },
-  "market": { "title": "Marketplace", "filters": { "search": "Search", "mode": "Mode", "all": "All", "sale": "Sale", "rent": "Rent", "type": "Type" }, "contact": "Contact via WhatsApp: +91 9000000000" },
-  "prefs": { "title": "Preferences", "idleThreshold": "Idle threshold (days)", "modesTitle": "Type to allowed modes", "backup": "Backup & Restore", "export": "Export JSON", "import": "Import JSON", "autosave": "Auto-save to a .json file", "enable": "Enable Auto-save", "disable": "Forget Auto-save file", "status": "Auto-save status" },
-  "help": { "title": "Help", "contentHtml": "<h3>How it works</h3><ol><li>Add items you own.</li><li>Tap check-in when you use them.</li><li>If idle beyond your threshold, they show up here. One click to list for sale or rent.</li></ol><h3>Privacy</h3><p>Everything stays in your browser unless you export a backup file.</p><h3>Tips</h3><ul><li>Set threshold in Preferences.</li><li>Use good photos.</li><li>Price realistically and use rent for tools.</li></ul>" }
-}
-</script>
+        <section id="features" class="features py-16 bg-white rounded-xl shadow-md mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-12">Designed for Your Convenience</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+                <div class="feature-card p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="text-5xl text-blue-500 mb-4 mx-auto w-fit">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Instant Quotes</h3>
+                    <p class="text-gray-600">Get an accurate estimate for your painting project in seconds, not days.</p>
+                </div>
+                <div class="feature-card p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="text-5xl text-emerald-500 mb-4 mx-auto w-fit">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Color Visualizer</h3>
+                    <p class="text-gray-600">See how colors look on your walls before the first brushstroke.</p>
+                </div>
+                <div class="feature-card p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="text-5xl text-indigo-500 mb-4 mx-auto w-fit">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Secure Payments</h3>
+                    <p class="text-gray-600">Flexible and secure payment options, including cash-on-completion.</p>
+                </div>
+                <div class="feature-card p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="text-5xl text-red-500 mb-4 mx-auto w-fit">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21H6.737a2 2 0 01-1.789-2.894l3.5-7A2 2 0 019.237 9h5.526A2 2 0 0114 10z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Live Job Tracking</h3>
+                    <p class="text-gray-600">Stay updated with real-time progress of your painting project.</p>
+                </div>
+                <div class="feature-card p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="text-5xl text-yellow-500 mb-4 mx-auto w-fit">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H2v-2a3 3 0 015.356-1.857M9 20H9m4-12h.01M6 20h.01M12 10a2 2 0 110-4 2 2 0 010 4zm-4 7a4 4 0 110-8 4 4 0 010 8zm-2-8a4 4 0 110-8 4 4 0 010 8zm5 7a4 4 0 110-8 4 4 0 010 8zm-2-8a4 4 0 110-8 4 4 0 010 8z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Qualified Painters</h3>
+                    <p class="text-gray-600">Access a network of verified and experienced painting professionals.</p>
+                </div>
+                <div class="feature-card p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="text-5xl text-purple-500 mb-4 mx-auto w-fit">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.014 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Review & Feedback</h3>
+                    <p class="text-gray-600">Provide feedback and help maintain service quality.</p>
+                </div>
+            </div>
+        </section>
 
-<script type="application/json" id="presets">
-{
-  "idleThresholdDays": 30,
-  "types": ["electronics","furniture","tools","clothing","books","other"],
-  "allowedModes": {
-    "electronics": "both",
-    "furniture": "both",
-    "tools": "both",
-    "clothing": "sale",
-    "books": "sale",
-    "other": "both"
-  }
-}
-</script>
+        <section id="painters" class="cta-painters bg-indigo-700 text-white py-16 rounded-xl shadow-md">
+            <h2 class="text-4xl font-bold mb-6">Are you a Professional Painter?</h2>
+            <p class="text-xl max-w-2xl mx-auto mb-8">
+                Join BrushPro's network to find new clients, manage your jobs efficiently, and grow your business.
+            </p>
+            <a href="register.html?user_type=painter" class="bg-white text-indigo-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                Register as a Painter
+            </a>
+        </section>
+    </main>
 
-<script src="js/core.js"></script>
-<script src="js/store.js"></script>
-<script src="js/dashboard.js"></script>
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Simple mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>

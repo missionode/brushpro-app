@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - Manage Clients</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-purple-700 text-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="admin_dashboard.html" class="text-2xl font-bold flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                BrushPro Admin
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="admin_dashboard.html" class="text-white hover:text-purple-200 font-medium">Dashboard</a>
+                <a href="admin_clients.html" class="text-purple-200 font-medium">Clients</a>
+                <a href="admin_painters.html" class="text-white hover:text-purple-200 font-medium">Painters</a>
+                <a href="admin_jobs.html" class="text-white hover:text-purple-200 font-medium">Jobs</a>
+                <a href="admin_settings.html" class="text-white hover:text-purple-200 font-medium">Settings</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-purple-800 shadow-lg py-2 mt-2 hidden">
+            <a href="admin_dashboard.html" class="block px-4 py-2 text-white hover:bg-purple-700">Dashboard</a>
+            <a href="admin_clients.html" class="block px-4 py-2 text-purple-200 hover:bg-purple-700">Clients</a>
+            <a href="admin_painters.html" class="block px-4 py-2 text-white hover:bg-purple-700">Painters</a>
+            <a href="admin_jobs.html" class="block px-4 py-2 text-white hover:bg-purple-700">Jobs</a>
+            <a href="admin_settings.html" class="block px-4 py-2 text-white hover:bg-purple-700">Settings</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-400 hover:bg-red-500">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Manage Clients</h1>
+        <p class="text-lg text-gray-600 mb-8">View, search, and manage client accounts.</p>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
+                <input type="text" id="clientSearch" placeholder="Search by name or email..."
+                       class="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Add New Client functionality (modal or new page)');">
+                    Add New Client
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client ID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Activity</th>
+                            <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientsTableBody" class="bg-white divide-y divide-gray-200">
+                        </tbody>
+                </table>
+            </div>
+
+            <nav class="flex items-center justify-between pt-4" aria-label="Pagination">
+                <div class="flex-1 flex justify-between sm:justify-end">
+                    <button id="prevPage" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Previous
+                    </button>
+                    <button id="nextPage" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Next
+                    </button>
+                </div>
+            </nav>
+             <p id="noClientsFound" class="text-gray-500 italic text-center mt-4 hidden">No clients found matching your search.</p>
+        </div>
+
+        <div id="clientDetailsModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 relative">
+                <button class="absolute top-3 right-3 text-gray-500 hover:text-gray-800" onclick="closeClientDetailsModal()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Client Details: <span id="modalClientName"></span></h3>
+                <div class="space-y-3 text-gray-700">
+                    <p><strong>Client ID:</strong> <span id="modalClientId"></span></p>
+                    <p><strong>Email:</strong> <span id="modalClientEmail"></span></p>
+                    <p><strong>Phone:</strong> <span id="modalClientPhone"></span></p>
+                    <p><strong>Address:</strong> <span id="modalClientAddress"></span></p>
+                    <p><strong>Account Status:</strong> <span id="modalClientStatus"></span></p>
+                    <p><strong>Member Since:</strong> <span id="modalClientMemberSince"></span></p>
+                    <p><strong>Last Activity:</strong> <span id="modalClientLastActivity"></span></p>
+                    <p><strong>Total Jobs Booked:</strong> <span id="modalClientTotalJobs"></span></p>
+                    <p><strong>Total Spent:</strong> <span id="modalClientTotalSpent" class="font-bold text-green-600"></span></p>
+                </div>
+                <div class="mt-6 border-t pt-4 flex justify-end space-x-3">
+                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="closeClientDetailsModal()">Close</button>
+                    <button id="editClientBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Edit Client</button>
+                    <button id="deactivateClientBtn" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Deactivate</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Mock Client Data
+        const mockClients = [
+            { id: 'CLI001', name: 'John Doe', email: 'john.doe@example.com', phone: '555-1001', status: 'Active', lastActivity: '2025-08-01', memberSince: '2024-01-15', address: '123 Main St, Anytown, CA', totalJobs: 5, totalSpent: 2500.00 },
+            { id: 'CLI002', name: 'Jane Smith', email: 'jane.smith@example.com', phone: '555-1002', status: 'Active', lastActivity: '2025-07-28', memberSince: '2023-11-20', address: '456 Oak Ave, Somewhere City, NY', totalJobs: 3, totalSpent: 1800.00 },
+            { id: 'CLI003', name: 'Alex Johnson', email: 'alex.j@example.com', phone: '555-1003', status: 'Active', lastActivity: '2025-08-05', memberSince: '2025-02-10', address: '789 Pine Ln, Otherville, TX', totalJobs: 1, totalSpent: 750.00 },
+            { id: 'CLI004', name: 'Maria Rodriguez', email: 'maria.r@example.com', phone: '555-1004', status: 'Active', lastActivity: '2025-08-03', memberSince: '2024-09-01', address: '101 Maple Dr, Big City, FL', totalJobs: 2, totalSpent: 1200.00 },
+            { id: 'CLI005', name: 'David Lee', email: 'david.l@example.com', phone: '555-1005', status: 'Inactive', lastActivity: '2025-05-10', memberSince: '2023-07-01', address: '222 River Rd, Small Town, GA', totalJobs: 0, totalSpent: 0.00 },
+            { id: 'CLI006', name: 'Emily White', email: 'emily.w@example.com', phone: '555-1006', status: 'Active', lastActivity: '2025-08-04', memberSince: '2025-03-22', address: '333 Hilltop View, High Peaks, CO', totalJobs: 1, totalSpent: 900.00 },
+            { id: 'CLI007', name: 'Chris Brown', email: 'chris.b@example.com', phone: '555-1007', status: 'Active', lastActivity: '2025-08-02', memberSince: '2024-06-18', address: '444 Valley Way, Low Lands, AZ', totalJobs: 4, totalSpent: 3000.00 },
+            { id: 'CLI008', name: 'Jessica Green', email: 'jessica.g@example.com', phone: '555-1008', status: 'Active', lastActivity: '2025-07-30', memberSince: '2024-02-05', address: '555 Forest Ave, Greenwoods, OR', totalJobs: 2, totalSpent: 1500.00 }
+        ];
+
+        let currentPage = 1;
+        const clientsPerPage = 5; // Number of clients per page
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderClients();
+            document.getElementById('clientSearch').addEventListener('input', renderClients);
+            document.getElementById('prevPage').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderClients();
+                }
+            });
+            document.getElementById('nextPage').addEventListener('click', () => {
+                const filteredClients = getFilteredClients();
+                if (currentPage * clientsPerPage < filteredClients.length) {
+                    currentPage++;
+                    renderClients();
+                }
+            });
+        });
+
+        function getFilteredClients() {
+            const searchTerm = document.getElementById('clientSearch').value.toLowerCase();
+            return mockClients.filter(client =>
+                client.name.toLowerCase().includes(searchTerm) ||
+                client.email.toLowerCase().includes(searchTerm)
+            ).sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically by name
+        }
+
+        function renderClients() {
+            const clientsTableBody = document.getElementById('clientsTableBody');
+            const noClientsFound = document.getElementById('noClientsFound');
+            clientsTableBody.innerHTML = ''; // Clear existing rows
+
+            const filteredClients = getFilteredClients();
+            
+            const startIndex = (currentPage - 1) * clientsPerPage;
+            const endIndex = startIndex + clientsPerPage;
+            const clientsToDisplay = filteredClients.slice(startIndex, endIndex);
+
+            if (clientsToDisplay.length === 0) {
+                noClientsFound.classList.remove('hidden');
+            } else {
+                noClientsFound.classList.add('hidden');
+                clientsToDisplay.forEach(client => {
+                    const row = clientsTableBody.insertRow();
+                    row.className = 'whitespace-nowrap';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">${client.id}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${client.name}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">${client.email}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">${client.phone}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${client.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                ${client.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">${client.lastActivity}</td>
+                        <td class="px-6 py-4 text-right text-sm font-medium">
+                            <a href="#" class="text-purple-600 hover:text-purple-900 mr-3" onclick="openClientDetailsModal('${client.id}')">View</a>
+                            <a href="#" class="text-indigo-600 hover:text-indigo-900" onclick="editClient('${client.id}')">Edit</a>
+                        </td>
+                    `;
+                });
+            }
+
+            updatePaginationButtons(filteredClients.length);
+        }
+
+        function updatePaginationButtons(totalClients) {
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage * clientsPerPage >= totalClients;
+        }
+
+        let currentClientForModal = null; // Store current client for modal actions
+
+        function openClientDetailsModal(clientId) {
+            currentClientForModal = mockClients.find(client => client.id === clientId);
+            if (!currentClientForModal) return;
+
+            document.getElementById('modalClientName').textContent = currentClientForModal.name;
+            document.getElementById('modalClientId').textContent = currentClientForModal.id;
+            document.getElementById('modalClientEmail').textContent = currentClientForModal.email;
+            document.getElementById('modalClientPhone').textContent = currentClientForModal.phone;
+            document.getElementById('modalClientAddress').textContent = currentClientForModal.address;
+            document.getElementById('modalClientStatus').textContent = currentClientForModal.status;
+            document.getElementById('modalClientMemberSince').textContent = currentClientForModal.memberSince;
+            document.getElementById('modalClientLastActivity').textContent = currentClientForModal.lastActivity;
+            document.getElementById('modalClientTotalJobs').textContent = currentClientForModal.totalJobs;
+            document.getElementById('modalClientTotalSpent').textContent = `$${currentClientForModal.totalSpent.toFixed(2)}`;
+            
+            document.getElementById('deactivateClientBtn').onclick = () => toggleClientStatus(currentClientForModal.id, currentClientForModal.status);
+            document.getElementById('deactivateClientBtn').textContent = currentClientForModal.status === 'Active' ? 'Deactivate' : 'Activate';
+            document.getElementById('deactivateClientBtn').className = currentClientForModal.status === 'Active' ? 'bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200' : 'bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200';
+
+            document.getElementById('editClientBtn').onclick = () => editClient(currentClientForModal.id);
+
+            document.getElementById('clientDetailsModal').classList.remove('hidden');
+        }
+
+        function closeClientDetailsModal() {
+            document.getElementById('clientDetailsModal').classList.add('hidden');
+            currentClientForModal = null;
+        }
+
+        function editClient(clientId) {
+            alert(`Editing client ID: ${clientId}. (This would open an edit form/modal in a real app)`);
+            // In a real app: window.location.href = `admin_edit_client.html?id=${clientId}`;
+            closeClientDetailsModal();
+        }
+
+        function toggleClientStatus(clientId, currentStatus) {
+            const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+            if (confirm(`Are you sure you want to ${newStatus.toLowerCase()} client ID: ${clientId}?`)) {
+                const clientIndex = mockClients.findIndex(c => c.id === clientId);
+                if (clientIndex > -1) {
+                    mockClients[clientIndex].status = newStatus;
+                    mockClients[clientIndex].lastActivity = new Date().toISOString().slice(0, 10); // Update last activity
+                }
+                alert(`Client ${clientId} is now ${newStatus}.`);
+                closeClientDetailsModal();
+                renderClients(); // Re-render the table to reflect changes
+            }
+        }
+    </script>
+</body>
+</html>

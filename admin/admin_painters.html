@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrushPro - Manage Painters</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <header class="bg-purple-700 text-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="admin_dashboard.html" class="text-2xl font-bold flex items-center">
+                <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                BrushPro Admin
+            </a>
+            <nav class="space-x-4 hidden md:flex">
+                <a href="admin_dashboard.html" class="text-white hover:text-purple-200 font-medium">Dashboard</a>
+                <a href="admin_clients.html" class="text-white hover:text-purple-200 font-medium">Clients</a>
+                <a href="admin_painters.html" class="text-purple-200 font-medium">Painters</a>
+                <a href="admin_jobs.html" class="text-white hover:text-purple-200 font-medium">Jobs</a>
+                <a href="admin_settings.html" class="text-white hover:text-purple-200 font-medium">Settings</a>
+                <a href="../login.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Logged out');">Logout</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="md:hidden bg-purple-800 shadow-lg py-2 mt-2 hidden">
+            <a href="admin_dashboard.html" class="block px-4 py-2 text-white hover:bg-purple-700">Dashboard</a>
+            <a href="admin_clients.html" class="block px-4 py-2 text-white hover:bg-purple-700">Clients</a>
+            <a href="admin_painters.html" class="block px-4 py-2 text-purple-200 hover:bg-purple-700">Painters</a>
+            <a href="admin_jobs.html" class="block px-4 py-2 text-white hover:bg-purple-700">Jobs</a>
+            <a href="admin_settings.html" class="block px-4 py-2 text-white hover:bg-purple-700">Settings</a>
+            <a href="../login.html" class="block px-4 py-2 text-red-400 hover:bg-red-500">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Manage Painters</h1>
+        <p class="text-lg text-gray-600 mb-8">View, search, and manage painter accounts and their profiles.</p>
+
+        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
+                <input type="text" id="painterSearch" placeholder="Search by name or email..."
+                       class="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <button class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="alert('Manage Pending Applications functionality (modal or new page)');">
+                    Review Applications (3)
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Painter ID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service Radius</th>
+                            <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="paintersTableBody" class="bg-white divide-y divide-gray-200">
+                        </tbody>
+                </table>
+            </div>
+
+            <nav class="flex items-center justify-between pt-4" aria-label="Pagination">
+                <div class="flex-1 flex justify-between sm:justify-end">
+                    <button id="prevPage" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Previous
+                    </button>
+                    <button id="nextPage" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Next
+                    </button>
+                </div>
+            </nav>
+            <p id="noPaintersFound" class="text-gray-500 italic text-center mt-4 hidden">No painters found matching your search.</p>
+        </div>
+
+        <div id="painterDetailsModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 relative">
+                <button class="absolute top-3 right-3 text-gray-500 hover:text-gray-800" onclick="closePainterDetailsModal()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Painter Details: <span id="modalPainterName"></span></h3>
+                <div class="space-y-3 text-gray-700">
+                    <p><strong>Painter ID:</strong> <span id="modalPainterId"></span></p>
+                    <p><strong>Email:</strong> <span id="modalPainterEmail"></span></p>
+                    <p><strong>Phone:</strong> <span id="modalPainterPhone"></span></p>
+                    <p><strong>Address:</strong> <span id="modalPainterAddress"></span></p>
+                    <p><strong>Account Status:</strong> <span id="modalPainterStatus"></span></p>
+                    <p><strong>Member Since:</strong> <span id="modalPainterMemberSince"></span></p>
+                    <p><strong>Service Radius:</strong> <span id="modalPainterServiceRadius"></span> miles</p>
+                    <p><strong>Preferred Job Types:</strong> <span id="modalPainterJobTypes"></span></p>
+                    <p><strong>Bio:</strong> <span id="modalPainterBio"></span></p>
+                    <p><strong>Total Jobs Completed:</strong> <span id="modalPainterTotalJobs"></span></p>
+                    <p><strong>Total Earned:</strong> <span id="modalPainterTotalEarned" class="font-bold text-green-600"></span></p>
+                </div>
+                <div class="mt-6 border-t pt-4 flex justify-end space-x-3">
+                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-200" onclick="closePainterDetailsModal()">Close</button>
+                    <button id="editPainterBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Edit Painter</button>
+                    <button id="togglePainterStatusBtn" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">Deactivate</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 BrushPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="../shared/shared_help_support.html" class="text-gray-300 hover:text-white">Help & Support</a>
+                <a href="../shared/privacy_policy.html" class="text-gray-300 hover:text-white">Privacy Policy</a>
+                <a href="../shared/terms_of_service.html" class="text-gray-300 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Mock Painter Data
+        const mockPainters = [
+            { id: 'PNT001', name: 'Sarah Miller', email: 'sarah.miller@brushpro.com', phone: '555-2001', status: 'Active', memberSince: '2023-03-10', address: '456 Painter\'s Lane, Metroville, CA', serviceRadius: 25, jobTypes: ['Interior Painting', 'Surface Preparation'], bio: 'Experienced and meticulous painter with 10+ years in residential interior painting.', totalJobs: 15, totalEarned: 15400.00 },
+            { id: 'PNT002', name: 'David Wilson', email: 'david.w@brushpro.com', phone: '555-2002', status: 'Active', memberSince: '2023-06-01', address: '789 Brush St, Art City, NY', serviceRadius: 30, jobTypes: ['Exterior Painting', 'Commercial Projects'], bio: 'Specializing in large-scale exterior projects and commercial spaces.', totalJobs: 10, totalEarned: 22000.00 },
+            { id: 'PNT003', name: 'Laura Garcia', email: 'laura.g@brushpro.com', phone: '555-2003', status: 'Pending', memberSince: '2025-07-20', address: '101 Palette Dr, New Town, TX', serviceRadius: 15, jobTypes: ['Interior Painting'], bio: 'New to BrushPro, eager to take on interior painting jobs.', totalJobs: 0, totalEarned: 0.00 },
+            { id: 'PNT004', name: 'Michael Brown', email: 'michael.b@brushpro.com', phone: '555-2004', status: 'Active', memberSince: '2024-01-05', address: '222 Canvas Ct, Color City, FL', serviceRadius: 40, jobTypes: ['Interior Painting', 'Exterior Painting', 'Surface Preparation'], bio: 'Versatile painter available for a wide range of residential projects.', totalJobs: 12, totalEarned: 18500.00 },
+            { id: 'PNT005', name: 'Jessica Chen', email: 'jessica.c@brushpro.com', phone: '555-2005', status: 'Inactive', memberSince: '2023-09-12', address: '333 Mural St, Old City, GA', serviceRadius: 20, jobTypes: ['Interior Painting'], bio: 'Experienced with decorative painting and murals, currently on sabbatical.', totalJobs: 8, totalEarned: 10000.00 },
+            { id: 'PNT006', name: 'Robert Davis', email: 'robert.d@brushpro.com', phone: '555-2006', status: 'Active', memberSince: '2024-04-18', address: '666 Brush Stroke Blvd, Vivid Ville, CO', serviceRadius: 35, jobTypes: ['Exterior Painting'], bio: 'Focused on high-quality exterior finishes, specializing in weather-resistant paints.', totalJobs: 7, totalEarned: 16000.00 },
+            { id: 'PNT007', name: 'Olivia Martinez', email: 'olivia.m@brushpro.com', phone: '555-2007', status: 'Pending', memberSince: '2025-08-01', address: '777 Art Drive, Creative Town, AZ', serviceRadius: 20, jobTypes: ['Interior Painting'], bio: 'Aspiring painter with a strong portfolio, looking for first jobs.', totalJobs: 0, totalEarned: 0.00 },
+        ];
+
+        let currentPage = 1;
+        const paintersPerPage = 5; // Number of painters per page
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPainters();
+            document.getElementById('painterSearch').addEventListener('input', renderPainters);
+            document.getElementById('prevPage').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderPainters();
+                }
+            });
+            document.getElementById('nextPage').addEventListener('click', () => {
+                const filteredPainters = getFilteredPainters();
+                if (currentPage * paintersPerPage < filteredPainters.length) {
+                    currentPage++;
+                    renderPainters();
+                }
+            });
+        });
+
+        function getFilteredPainters() {
+            const searchTerm = document.getElementById('painterSearch').value.toLowerCase();
+            return mockPainters.filter(painter =>
+                painter.name.toLowerCase().includes(searchTerm) ||
+                painter.email.toLowerCase().includes(searchTerm)
+            ).sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically by name
+        }
+
+        function renderPainters() {
+            const paintersTableBody = document.getElementById('paintersTableBody');
+            const noPaintersFound = document.getElementById('noPaintersFound');
+            paintersTableBody.innerHTML = ''; // Clear existing rows
+
+            const filteredPainters = getFilteredPainters();
+            
+            const startIndex = (currentPage - 1) * paintersPerPage;
+            const endIndex = startIndex + paintersPerPage;
+            const paintersToDisplay = filteredPainters.slice(startIndex, endIndex);
+
+            if (paintersToDisplay.length === 0) {
+                noPaintersFound.classList.remove('hidden');
+            } else {
+                noPaintersFound.classList.add('hidden');
+                paintersToDisplay.forEach(painter => {
+                    const row = paintersTableBody.insertRow();
+                    row.className = 'whitespace-nowrap';
+                    let statusColorClass = '';
+                    if (painter.status === 'Active') {
+                        statusColorClass = 'bg-green-100 text-green-800';
+                    } else if (painter.status === 'Pending') {
+                        statusColorClass = 'bg-yellow-100 text-yellow-800';
+                    } else { // Inactive
+                        statusColorClass = 'bg-red-100 text-red-800';
+                    }
+
+                    row.innerHTML = `
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">${painter.id}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">${painter.name}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">${painter.email}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">${painter.phone}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColorClass}">
+                                ${painter.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">${painter.serviceRadius} miles</td>
+                        <td class="px-6 py-4 text-right text-sm font-medium">
+                            <a href="#" class="text-purple-600 hover:text-purple-900 mr-3" onclick="openPainterDetailsModal('${painter.id}')">View</a>
+                            <a href="#" class="text-indigo-600 hover:text-indigo-900" onclick="editPainter('${painter.id}')">Edit</a>
+                        </td>
+                    `;
+                });
+            }
+
+            updatePaginationButtons(filteredPainters.length);
+        }
+
+        function updatePaginationButtons(totalPainters) {
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage * paintersPerPage >= totalPainters;
+        }
+
+        let currentPainterForModal = null; // Store current painter for modal actions
+
+        function openPainterDetailsModal(painterId) {
+            currentPainterForModal = mockPainters.find(painter => painter.id === painterId);
+            if (!currentPainterForModal) return;
+
+            document.getElementById('modalPainterName').textContent = currentPainterForModal.name;
+            document.getElementById('modalPainterId').textContent = currentPainterForModal.id;
+            document.getElementById('modalPainterEmail').textContent = currentPainterForModal.email;
+            document.getElementById('modalPainterPhone').textContent = currentPainterForModal.phone;
+            document.getElementById('modalPainterAddress').textContent = currentPainterForModal.address;
+            document.getElementById('modalPainterStatus').textContent = currentPainterForModal.status;
+            document.getElementById('modalPainterMemberSince').textContent = currentPainterForModal.memberSince;
+            document.getElementById('modalPainterServiceRadius').textContent = currentPainterForModal.serviceRadius;
+            document.getElementById('modalPainterJobTypes').textContent = currentPainterForModal.jobTypes.join(', ') || 'N/A';
+            document.getElementById('modalPainterBio').textContent = currentPainterForModal.bio || 'N/A';
+            document.getElementById('modalPainterTotalJobs').textContent = currentPainterForModal.totalJobs;
+            document.getElementById('modalPainterTotalEarned').textContent = `$${currentPainterForModal.totalEarned.toFixed(2)}`;
+            
+            const toggleStatusBtn = document.getElementById('togglePainterStatusBtn');
+            if (currentPainterForModal.status === 'Active') {
+                toggleStatusBtn.textContent = 'Deactivate';
+                toggleStatusBtn.className = 'bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200';
+                toggleStatusBtn.onclick = () => togglePainterStatus(currentPainterForModal.id, 'Inactive');
+            } else if (currentPainterForModal.status === 'Inactive') {
+                toggleStatusBtn.textContent = 'Activate';
+                toggleStatusBtn.className = 'bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200';
+                toggleStatusBtn.onclick = () => togglePainterStatus(currentPainterForModal.id, 'Active');
+            } else { // Pending
+                toggleStatusBtn.textContent = 'Approve';
+                toggleStatusBtn.className = 'bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200';
+                toggleStatusBtn.onclick = () => togglePainterStatus(currentPainterForModal.id, 'Active');
+                // Could also add a 'Reject' button here
+            }
+
+            document.getElementById('editPainterBtn').onclick = () => editPainter(currentPainterForModal.id);
+
+            document.getElementById('painterDetailsModal').classList.remove('hidden');
+        }
+
+        function closePainterDetailsModal() {
+            document.getElementById('painterDetailsModal').classList.add('hidden');
+            currentPainterForModal = null;
+        }
+
+        function editPainter(painterId) {
+            alert(`Editing painter ID: ${painterId}. (This would open an edit form/modal in a real app)`);
+            // In a real app: window.location.href = `admin_edit_painter.html?id=${painterId}`;
+            closePainterDetailsModal();
+        }
+
+        function togglePainterStatus(painterId, newStatus) {
+            const action = newStatus === 'Active' ? 'activate/approve' : 'deactivate';
+            if (confirm(`Are you sure you want to ${action} painter ID: ${painterId}?`)) {
+                const painterIndex = mockPainters.findIndex(p => p.id === painterId);
+                if (painterIndex > -1) {
+                    mockPainters[painterIndex].status = newStatus;
+                }
+                alert(`Painter ${painterId} status updated to: ${newStatus}.`);
+                closePainterDetailsModal();
+                renderPainters(); // Re-render the table to reflect changes
+            }
+        }
+    </script>
+</body>
+</html>
